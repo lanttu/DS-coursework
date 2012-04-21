@@ -1,0 +1,14 @@
+var gameOn = 0;
+var numOfPlayers = 0;
+var playerInTurn = 0;
+var numOfPairs = 0;
+var playersList = new Array();
+var game;
+var tilanne;
+var card = "XX";
+var cardX = 0;
+var cardY = 0;
+var scardX = 0;
+var scardY = 0;
+var timeShown = 2000;
+var timer_on = 0;

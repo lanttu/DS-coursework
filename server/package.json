@@ -1,0 +1,16 @@
+{
+    "name": "Memory",
+    "version": "0.0.1",
+    "private": true,
+    "dependencies": {
+        "express": "2.5.9",
+        "async": ">= 0.1.18",
+        "socket.io": ">= 0.8.7",
+        "underscore": ">= 1.2.1"
+    },
+    "devDependencies": {
+        "mocha": ">= 0.12.1",
+        "should": ">= 0.5.1"
+    },
+    "engine": "node >= 0.6.1"
+}
