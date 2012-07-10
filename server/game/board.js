@@ -5,9 +5,13 @@ var winston = require('winston');
 var COLS = 4;
 
 /**
+ * Card containter
  * 
  * @class game.Board
- * 
+ */
+/**
+ * @method contstructor
+ * Creates board with given number of pairs
  * @param {Number} pairs Number of pairs
  */
 var Board = module.exports = function (pairs) {
@@ -49,8 +53,8 @@ var Board = module.exports = function (pairs) {
  * 
  * @method
  * 
- * @param {Numeric} x Column
- * @param {Numeric} y Row
+ * @param {Number} x Column
+ * @param {Number} y Row
  * @return {String|null} Card ID or null if card is removed
  */
 Board.prototype.getCard = function (x, y) {
@@ -66,8 +70,8 @@ Board.prototype.getCard = function (x, y) {
  * 
  * @method
  * 
- * @param {Numeric} x Column
- * @param {Numeric} y Row
+ * @param {Number} x Column
+ * @param {Number} y Row
  * @return {String|null} Card value before removing
  */
 Board.prototype.removeCard = function (x, y) {
@@ -77,6 +81,13 @@ Board.prototype.removeCard = function (x, y) {
 };
 
 
+/**
+ * Returns public state of the board
+ * 
+ * @method
+ * 
+ * @return {Array}
+ */
 Board.prototype.getState = function () {
     var state = [];
     var x     = 0;
@@ -115,6 +126,13 @@ Board.prototype.generateCardId = function (runningNum) {
 };
 
 
+/**
+ * Number of cards still on the board
+ * 
+ * @method
+ * 
+ * @return {Number}
+ */
 Board.prototype.getCardCount = function () {
     var count = 0;
     var x     = 0;

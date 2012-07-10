@@ -11,9 +11,13 @@ var Game         = game.Game;
 
 
 /**
- * Endpoint to which browser conncets
+ * Endpoint to which browser connects
  * 
- * @class game.BrowserEndpoint
+ * @class network.BrowserEndpoint
+ */
+/**
+ * @method constructor
+ * Creates endpoint
  * 
  * @param {App} app
  * @param {Object} config

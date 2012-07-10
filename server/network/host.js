@@ -5,15 +5,14 @@ var winston = require('winston');
 var RemotePlayer = require('./remotePlayer');
 
 
-// var S_WAITING = 'waiting';
-// var S_HALT    = 'halt';
-// var S_PLAYING = 'playing';
-
-
 /**
- * 
  * @class network.Host
- * 
+ * Hosts game
+ */
+/**
+ * @method constructor
+ * Exposes game to remote players
+ * @param {game.Game} game Exposed game
  * @param {Object} config 
  */
 var Host = module.exports = function (game, config) {
@@ -37,7 +36,7 @@ var Host = module.exports = function (game, config) {
 /**
  * Creates new player or rejoins player depending on the current state
  * 
- * @module
+ * @method
  * @private
  * 
  * @param {Socket} socket Connection socket
@@ -61,6 +60,7 @@ Host.prototype.handleConnection = function (id, socket) {
 /**
  * Stops hosting the game
  * 
+ * @method
  */
 Host.prototype.close = function () {
     var host = this;

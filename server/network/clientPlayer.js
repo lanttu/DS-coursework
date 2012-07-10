@@ -8,10 +8,17 @@ var game         = require('./../game');
 var Player       = game.Player;
 
 /**
+ * Client for RemotePlayer
  * 
  * @class network.ClientPlayer
+ * @extends EventEmitter
+ */
+/**
+ * @method constructor
+ * Creates client for remote player
  * 
  * @param {String} address
+ * @param {String} name Player name (id)
  */
 var ClientPlayer = module.exports = function (address, name) {
     var client = this;

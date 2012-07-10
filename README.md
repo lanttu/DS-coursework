@@ -1,6 +1,8 @@
 # Distributed systems - Course work
 
-This is course work for course _521266S Distributed Systems_ spring 2012
+This is course work for course _521266S Distributed Systems_ spring 2012.
+
+Use jsduck to generate documentation.
 
 1. Install node
 2. Install npm

@@ -8,14 +8,19 @@ var util         = require('util');
 var Board        = require('./board');
 
 /**
+ * Game
  * 
  * @class game.Game
  * @extends EventEmitter
+ */
+/**
+ * @method constructor
+ * New game
  * 
- * @param {Object} config Game config
+ * @param {Object} config Game config Config not used
  */
 var Game = module.exports = function (config) {
-    // Init variables
+    // Init players
     this.players      = [];
 
     // Init settings
@@ -27,6 +32,8 @@ util.inherits(Game, EventEmitter);
 
 /**
  * Addes player to the game
+ * 
+ * @method
  * 
  * @param {game.Player} player
  * @return {Boolean} True if player added
@@ -59,6 +66,13 @@ Game.prototype.addPlayer = function (player) {
 };
 
 
+/**
+ * Removes player from the game
+ * 
+ * @method
+ * 
+ * @param {game.Player} player
+ */
 Game.prototype.removePlayer = function (player) {
     // Remove from player list
     this.players = _.reject(this.players, function (p) { return p === player; });
@@ -77,6 +91,14 @@ Game.prototype.removePlayer = function (player) {
 };
 
 
+/**
+ * Get player object
+ * 
+ * @method
+ * 
+ * @param {String} id Player id
+ * @return {game.Player}
+ */
 Game.prototype.getPlayer = function (id) {
     var player = _.find(this.players, function (player) {
         return player.id === id;
@@ -84,6 +106,14 @@ Game.prototype.getPlayer = function (id) {
     return player;
 };
 
+
+/**
+ * Update active player and return it
+ * 
+ * @method
+ * 
+ * @return {game.Player} New active player
+ */
 Game.prototype.getNextPlayer = function () {
     var next, i;
 
@@ -124,6 +154,8 @@ Game.prototype.play = function () {
  * 
  * @method
  * @private
+ * 
+ * @property {Boolean} [samePlayer=false] Don't change active user
  */
 Game.prototype.nextTurn = function (samePlayer) {
     var player;
@@ -141,7 +173,15 @@ Game.prototype.nextTurn = function (samePlayer) {
 };
 
 
-
+/**
+ * Player selects card
+ * 
+ * @method
+ * 
+ * @param {game.Player} player
+ * @param {Number} x Column
+ * @param {Number} y Row
+ */
 Game.prototype.seeCard = function (player, x, y) {
     var game = this;
     var card, firstCard;
@@ -175,12 +215,6 @@ Game.prototype.seeCard = function (player, x, y) {
 
 
             this.nextTurn(true);
-            // this.emitState();
-
-            // // Player's turn again
-            // this.firstCard = null;
-            // game.clear();
-            // player.emit('turn');
 
         } else {
             // Mismatch
@@ -195,6 +229,8 @@ Game.prototype.seeCard = function (player, x, y) {
 
 /**
  * Hold state a moment before calling cb
+ * 
+ * @method
  *
  * @param {Function} cb
  */
@@ -210,6 +246,16 @@ Game.prototype.hold = function (cb) {
     }, 1500);
 };
 
+
+/**
+ * Sends clear event to all players
+ * 
+ * Clear event turns all cards backside up
+ * 
+ * @method
+ * @private
+ * 
+ */
 Game.prototype.clear = function () {
     this.players.forEach(function (player) {
         player.emit('clear');
@@ -217,6 +263,14 @@ Game.prototype.clear = function () {
 };
 
 
+/**
+ * Check if ending condition is true and ends game
+ * 
+ * @method
+ * @private
+ * 
+ * @return {Boolean} Is game ended
+ */
 Game.prototype.end = function () {
     var cardCount = this.board.getCardCount();
     if (cardCount !== 0) return false;
@@ -250,6 +304,12 @@ Game.prototype.close = function () {
 };
 
 
+/**
+ * Resets game to initial state
+ * 
+ * @method
+ * 
+ */
 Game.prototype.reset = function () {
     this.playing      = false;
     this.activePlayer = null;
@@ -273,8 +333,8 @@ Game.prototype.reset = function () {
  * @method
  * @private
  * 
- * @param {Numeric} x Column
- * @param {Numeric} y Row
+ * @param {Number} x Column
+ * @param {Number} y Row
  * @param {String} card Card ID
  */
 Game.prototype.showCard = function (x, y, card) {
@@ -288,6 +348,7 @@ Game.prototype.showCard = function (x, y, card) {
  * Send updated state to all players
  * 
  * @method
+ * @private
  */
 Game.prototype.emitState = function () {
     var state = this.getState();
@@ -297,6 +358,13 @@ Game.prototype.emitState = function () {
 };
 
 
+/**
+ * Returns state of the game
+ * 
+ * @method
+ * 
+ * @return {Object}
+ */
 Game.prototype.getState = function () {
     var game  = this;
     var state = {

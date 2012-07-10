@@ -8,10 +8,14 @@ var util         = require('util');
  * Player
  * 
  * @class game.Player
+ * @extends EventEmitter
  *
- * Player -> Host = action
- * Host -> Player = event
- *
+ *      Player -> Host = action
+ *      Host -> Player = event
+ */
+/**
+ * Creates player
+ * @method constructor
  * @param {String} id Player id
  */ 
 var Player = module.exports = function (id) {

@@ -5,12 +5,13 @@ var util   = require('util');
 
 
 /**
- * Remote player
- * 
- * Behaves as a proxy between Game and ClientPlayer
- * 
  * @class network.RemotePlayer
  * @extends game.Player
+ * A proxy between Game and ClientPlayer
+ */
+/**
+ * @method constructor
+ * Player wrapper around socket 
  * 
  * @param {String} id
  * @param {Socket} socket
@@ -35,6 +36,13 @@ var RemotePlayer = module.exports = function (id, socket) {
 
 util.inherits(RemotePlayer, Player);
 
+
+/**
+ * Sets socket new socket for player
+ *
+ * @method
+ * @param {Socket} socket
+ */
 RemotePlayer.prototype.setSocket = function (socket) {
     var player = this;
 
