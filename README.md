@@ -21,15 +21,14 @@
 5. Connected - Playing
 
 
-### Browser --> Endpoint
-* connect
-* join
-* move
-* chat
+### Structure
 
-#### From client
-*
-* CONNECT
-*
+<--->    Event
+<- - ->  WebScoket
 
-#### From server
+#### Host
+Game <---> Player <---> BrowserEndpoint <- - -> Browser
+
+#### Client
+Game <---> RemotePlayer <- - -> PlayerClient <---> BrowserEndpoint <- - -> Browser
+

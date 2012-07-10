@@ -1,0 +1,80 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <title>Browser test</title>
+    <link href="/css/bootstrap.css" rel="stylesheet"/>
+    <link href="/css/board.css" rel="stylesheet"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/main.js"></script>
+</head>
+<body>
+
+    <div class="container">
+        <div id="loading">
+            <div class="page-header">
+                <h1>Connecting...</h1>
+            </div>
+            <div class="alert alert-error" id="alertConnect" style="display: none;">
+                <strong>Error!</strong> Couldn't connect
+            </div>
+        </div>
+
+        <div id="menu" style="display:none;">
+            <div class="page-header">
+                <h1>Memory game</h1>
+            </div>
+            <div class="row">
+                <div class="span4">
+                    <ul class="nav nav-list">
+                        <li class="nav-header">Menu</li>
+                        <li><a href="#" id="btnHost">Host</a></li>
+                        <li><a href="#" id="btnJoin">Join</a></li>
+                    </ul>
+                </div>
+                <div class="span4">
+                    <input type="text" placeholder="Address" id="address" value="http://localhost:5000">
+                </div>
+            </div>
+        </div>
+
+        <div id="room" style="display:none;">
+            <div class="page-header">
+                <h1>Waiting for players...</h1>
+            </div>
+            <div class="row">
+                <div class="span4">
+                    <ul class="nav nav-list">
+                        <li class="nav-header">Menu</li>
+                        <li><a href="#" id="btnStart">Start</a></li>
+                        <li><a href="#" id="btnLeave">Quit</a></li>
+                    </ul>
+                </div>
+                <div class="span4">
+                    <h3>Players</h3>
+                    <ul class="nav nav-pills nav-stacked players">
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div id="game" style="display:none;">
+            <div class="page-header">
+                <h1>Playing...</h1>
+            </div>
+            <div class="row">
+                <div class="span4">
+                    <h4>Players</h4>
+                    <ul class="nav nav-pills nav-stacked players">
+                    </ul>
+                </div>
+                <div class="span8">
+                    <div id="board"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+</html>

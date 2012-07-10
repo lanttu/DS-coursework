@@ -1,42 +1,76 @@
-exports = module.exports = Player;
+'use strict';
 
+var EventEmitter = require('events').EventEmitter;
+var winston      = require('winston');
+var util         = require('util');
 
 /**
- * Player constructor
+ * Player
+ * 
+ * @class game.Player
  *
  * Player -> Host = action
  * Host -> Player = event
  *
  * @param {String} id Player id
  */ 
-function Player (id) {
+var Player = module.exports = function (id) {
     var player = this;
 
-    this.id = null;
+    this.id    = id;
+    this.score = 0;
 
     // Register debug listener for all actions player can trigger
     player.actions.forEach(function (act) {
         player.on(act, function () {
-            console.debug('Player ' + player.id + ' >> ' + act, arguments);
+            winston.debug('Player ' + player.id + ' >> ' + act, arguments);
         });
     });
-}
 
-Player.prototype.__proto__ = process.EventEmitter.prototype;
+    player.events.forEach(function (evt) {
+        player.on(evt, function () {
+            winston.debug('Player ' + player.id + ' << ' + evt, arguments);
+        });
+    })
+};
 
-
-/**
- * Method for sending events from game to player
- *
- * @param {String} event Event name
- */
-Player.prototype.send = function (event) {
-    var args = Array.prototype.slice.call(arguments, 1);
-    console.debug('Player ' + this.id + ' << ' + event, args);
-}
+util.inherits(Player, EventEmitter);
 
 
 /**
- * All possible actions player can do
+ * Adds one point to player
+ * 
+ * @method
+ * 
+ * @return {Number} New score
  */
-Player.prototype.actions = ['see', 'players', 'disconnect'];
+Player.prototype.addScore = function () {
+    this.score++;
+    return this.score;
+}
+
+
+/**
+ * Actions that player may do
+ * 
+ * @property {Array}
+ */
+Player.prototype.actions = [
+    'getState', // Request current state
+    'see'       // See card
+    // 'players'   // 
+];
+
+
+/**
+ * Events that game may trigger
+ * 
+ * @property {Array}
+ */
+Player.prototype.events = [
+    'turn',     // Player's turn
+    'card',     // Card shown
+    'state',    // Game state changed
+    'clear',    // Clear visible cards
+    'end'       // Game ended
+];

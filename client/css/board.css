@@ -1,0 +1,24 @@
+.col {
+    width: 104px;
+    display: inline-block;
+}
+
+.card,
+.empty {
+    height: 100px;
+    width: 100px;
+    margin: 2px 2px 4px 2px;
+    line-height: 100px;
+    text-align: center;
+}
+.card { 
+    background-color: green;
+}
+.empty {
+    background-color: red;
+}
+
+.visible {
+    color: yellow;
+    font-weight: bold;
+}
