@@ -51,8 +51,31 @@ Game.prototype.addPlayer = function (player) {
         player.emit('state', game.getState());
     });
 
+    player.on('quit', function () {
+        game.removePlayer(player);
+    });
+
     return true;
 };
+
+
+Game.prototype.removePlayer = function (player) {
+    // Remove from player list
+    this.players = _.reject(this.players, function (p) { return p === player; });
+
+    if (this.players.length === 0) {
+        // Close game if no players
+        this.close();
+    } else {
+        if (this.activePlayer === player) {
+            this.nextTurn();
+        } else {
+            this.emitState();
+        }
+    }
+
+};
+
 
 Game.prototype.getPlayer = function (id) {
     var player = _.find(this.players, function (player) {
@@ -193,11 +216,12 @@ Game.prototype.clear = function () {
     });
 };
 
+
 Game.prototype.end = function () {
     var cardCount = this.board.getCardCount();
     if (cardCount !== 0) return false;
 
-    // End game
+    // End one round
 
     // Resolve winner
     var winner = _.max(this.players, function (player) {
@@ -213,6 +237,16 @@ Game.prototype.end = function () {
     this.reset();
 
     return true;
+};
+
+
+/**
+ * Closes game
+ * 
+ * @method
+ */
+Game.prototype.close = function () {
+
 };
 
 

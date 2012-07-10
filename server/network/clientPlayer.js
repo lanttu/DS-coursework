@@ -15,14 +15,44 @@ var Player       = game.Player;
  */
 var ClientPlayer = module.exports = function (address, name) {
     var client = this;
+    this.quit = false;
 
     name = name || 'Client';
 
     // Listen incoming connections
-    this.socket = io.connect(address);
+    this.socket = io.connect(address, {
+        'connect timeout'           : 1500,
+        'reconnect'                 : false,
+        'try multiple transports'   : false,
+        'force new connection'      : true
+    });
     this.socket.on('connect', function () {
         client.socket.emit('handshake', name);
     });
+
+    this.socket.on('connect_failed', function () {
+        if (client.quit) return;
+
+        client.emit('quit', 'Connection failed');
+        client.quit = true;
+    });
+    this.socket.on('error', function () {
+        if (client.quit) return;
+
+        client.emit('quit', 'Connection failed');
+        client.quit = true;
+    });
+    this.socket.on('disconnect', function () {
+        if (client.quit) return;
+
+        client.emit('quit', 'Connection failed');
+        client.quit = true;
+    });
+
+    // this.on('quit', function () {
+    //     console.info('QUIT THIS SHIT');
+    //     this.socket.disconnect();
+    // });
 
     // Behave as a proxy emitter for events coming from host machine
     Player.prototype.events.forEach(function (evt) {
@@ -42,5 +72,6 @@ var ClientPlayer = module.exports = function (address, name) {
         });
     });
 };
+
 
 util.inherits(ClientPlayer, EventEmitter);

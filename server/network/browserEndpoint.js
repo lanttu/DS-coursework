@@ -72,9 +72,6 @@ BrowserEndpoint.prototype.initConnection = function (socket) {
         endpoint.joinGame(address);
     });
 
-    socket.on('leaveGame', function () {
-        endpoint.leaveGame();
-    });
     socket.on('createGame', function () {
         endpoint.createGame();
     });
@@ -137,15 +134,25 @@ BrowserEndpoint.prototype.createGame = function () {
         // Reset existing game
         this.game.reset();
     } else {
-        // Create new game
+        // Create new game and host it
         var game = new Game(3);
         var host = new Host(game, config.game);
 
         endpoint.host = host;
         endpoint.game = game;
-        var player = new Player('__LOCAL__');
+
+        var player = new Player('Local');
         endpoint.setPlayer(player);
         game.addPlayer(player);
+
+        // When local player quits, stop hosting and end game
+        player.on('quit', function () {
+            host.close();
+            game.close();
+
+            delete endpoint.host;
+            delete endpoint.game;
+        });
     }
 
 
@@ -160,30 +167,13 @@ BrowserEndpoint.prototype.startGame = function () {
 
 
 /**
- * Clears hosted game
- */
-BrowserEndpoint.prototype.clearGame = function () {
-    var endpoint = this;
-
-    endpoint.host = null;
-    endpoint.player = null;
-};
-
-
-/**
- *
+ * Joins game hosted by someone else
+ * 
+ * @param {String} address Host address
  */
 BrowserEndpoint.prototype.joinGame = function (address) {
     var player = new ClientPlayer(address);
     this.setPlayer(player);
-};
-
-
-/**
- *
- */
-BrowserEndpoint.prototype.leaveGame = function () {
-
 };
 
 
@@ -204,5 +194,11 @@ BrowserEndpoint.prototype.setPlayer = function (player) {
 
             endpoint.socket.emit.apply(endpoint.socket, args);
         });
+    });
+
+
+    player.on('quit', function () {
+        endpoint.player = null;
+        endpoint.updateBrowser();
     });
 };

@@ -56,6 +56,7 @@ Player.prototype.addScore = function () {
  * @property {Array}
  */
 Player.prototype.actions = [
+    'quit',     // Leave game
     'getState', // Request current state
     'see'       // See card
     // 'players'   // 

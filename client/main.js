@@ -16,7 +16,7 @@ $(function () {
     });
 
     $('#btnLeave').click(function () {
-        socket.emit('leaveGame');
+        socket.emit('quit');
     });
 
     $('#btnStart').click(function () {
