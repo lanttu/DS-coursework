@@ -49,10 +49,6 @@ var ClientPlayer = module.exports = function (address, name) {
         client.quit = true;
     });
 
-    // this.on('quit', function () {
-    //     console.info('QUIT THIS SHIT');
-    //     this.socket.disconnect();
-    // });
 
     // Behave as a proxy emitter for events coming from host machine
     Player.prototype.events.forEach(function (evt) {

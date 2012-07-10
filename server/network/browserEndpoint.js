@@ -141,7 +141,7 @@ BrowserEndpoint.prototype.createGame = function () {
         endpoint.host = host;
         endpoint.game = game;
 
-        var player = new Player('Local');
+        var player = new Player(config.username);
         endpoint.setPlayer(player);
         game.addPlayer(player);
 
@@ -172,7 +172,7 @@ BrowserEndpoint.prototype.startGame = function () {
  * @param {String} address Host address
  */
 BrowserEndpoint.prototype.joinGame = function (address) {
-    var player = new ClientPlayer(address);
+    var player = new ClientPlayer(address, config.username);
     this.setPlayer(player);
 };
 
