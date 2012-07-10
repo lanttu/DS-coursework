@@ -1,5 +1,7 @@
 # Distributed systems - Course work
 
+This is course work for course _521266S Distributed Systems_ spring 2012
+
 1. Install node
 2. Install npm
 3. npm install git://github.com/lanttu/DS-coursework.git
@@ -11,7 +13,8 @@
 
 #### Host
     Game <---> Player <---> BrowserEndpoint <- - -> Browser
-#### Client
+
+#### Client
     Game <---> RemotePlayer <- - -> PlayerClient <---> BrowserEndpoint <- - -> Browser
 
 
