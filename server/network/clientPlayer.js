@@ -28,10 +28,12 @@ var ClientPlayer = module.exports = function (address, name) {
 
     // Listen incoming connections
     this.socket = io.connect(address, {
+        // 'secure'                    : true,
         'connect timeout'           : 1500,
         'reconnect'                 : false,
         'try multiple transports'   : false,
         'force new connection'      : true
+        // 'log level'                 : 5
     });
     this.socket.on('connect', function () {
         client.socket.emit('handshake', name);
