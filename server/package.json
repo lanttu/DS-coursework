@@ -3,7 +3,7 @@
     "version": "0.1.0",
     "private": true,
     "dependencies": {
-        "express": "2.5.9",
+        "express": "4.17.1",
         "async": "latest",
         "socket.io": "latest",
         "socket.io-client": "latest",
